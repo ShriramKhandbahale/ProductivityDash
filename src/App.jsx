@@ -3,15 +3,19 @@ import { Route, Routes } from 'react-router-dom'
 
 // components 
 import { Sidebar } from './components';
+
+// pages 
 import { Home, Kanban, Todo, Pomodoro } from './pages'
 
 const App = () => {
   return (
     <div className='App'>
       <div className="App__container">
+
         <div className="App__container__sidebar">
           <Sidebar />
         </div>
+
         <div className="App__container__app">
           <Routes>
             <Route path='/' element={<Home />} />

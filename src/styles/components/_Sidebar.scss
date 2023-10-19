@@ -46,7 +46,6 @@
         align-items: center;
         gap: 1rem;
         margin-left: 1.2rem;
-        color: white;
 
         &__icon {
             img {
@@ -64,6 +63,6 @@
         transition: 0.3s ease;
         cursor: pointer;
         background: rgba(54, 54, 54, 0.5);
-        border-radius: 8px;
+        // border-radius: 8px;
     }
 }
