@@ -2,15 +2,68 @@
 
 .Sidebar {
     background: $secondary-clr;
-    height: 95%;
-    width: 60%;
+    height: 96%;
     border-radius: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.5s ease;
 
     &__container {
         height: 95%;
         width: 80%;
+        position: relative;
+        overflow: hidden;
+
+        &__nav {
+            height: 60%;
+        }
+
+        &__bin {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                position: absolute;
+                bottom: 1rem;
+                width: 1.5rem;
+                filter: invert(1);
+            }
+        }
+    }
+}
+
+.Nav {
+    padding-block: 0.8rem;
+    margin-block: 1rem;
+    border-radius: 8px;
+
+    &__container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-left: 1.2rem;
+        color: white;
+
+        &__icon {
+            img {
+                width: 1.5rem;
+                filter: invert(1);
+            }
+        }
+
+        &__title {
+            // animation: fadeIn 1s;
+        }
+    }
+
+    &:hover {
+        transition: 0.3s ease;
+        cursor: pointer;
+        background: rgba(54, 54, 54, 0.5);
+        border-radius: 8px;
     }
 }
