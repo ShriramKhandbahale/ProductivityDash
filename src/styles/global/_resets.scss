@@ -1,0 +1,51 @@
+@use "../util/variables" as *;
+
+html {
+    height: 100%;
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+}
+
+html::-webkit-scrollbar {
+    width: 0px;
+}
+
+body {
+    height: 100%;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+a,
+a:visited,
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+button {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 100;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.App {
+    height: 100vh;
+    text-align: center;
+    background: $bg-clr;
+}

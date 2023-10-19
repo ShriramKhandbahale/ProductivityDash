@@ -1,0 +1,25 @@
+.App {
+    &__container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+
+        &__sidebar {
+            height: 100%;
+            width: 8rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &__app {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
