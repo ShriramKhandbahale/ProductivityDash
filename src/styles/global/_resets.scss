@@ -13,10 +13,6 @@ html {
     margin: 0;
 }
 
-html::-webkit-scrollbar {
-    width: 0px;
-}
-
 body {
     height: 100%;
     background-size: auto;
@@ -48,4 +44,5 @@ button {
     height: 100vh;
     text-align: center;
     background: $bg-clr;
+    overflow: hidden;
 }
