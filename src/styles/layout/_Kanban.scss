@@ -32,10 +32,26 @@
         &__board {
             height: 100%;
             width: 100%;
-            overflow-x: scroll;
+            overflow-x: auto;
             display: flex;
             align-items: center;
             gap: 1rem;
+
+            &::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(128, 128, 128, 0.5);
+
+                &:hover {
+                    background: rgba(128, 128, 128, .8);
+                }
+            }
+
+            &__addColumn {
+                height: 98%;
+            }
         }
     }
 }
