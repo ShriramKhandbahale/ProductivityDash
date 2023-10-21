@@ -1,16 +1,33 @@
 import { useContext } from "react"
 import { KanbanBlock } from "../components"
 import { KanbanContext } from "../context"
-const Kanban = () => {
-  const { boardData } = useContext(KanbanContext);
 
+const Kanban = () => {
+  const { boardData, setBoardData, resetBoard: reset } = useContext(KanbanContext);
+
+  const addColumn = () => {
+    const column = {
+      title: 'New Column',
+      id: crypto.randomUUID(),
+      cardsCount: 0 ,
+      cards: []
+    }
+    let updatedBoardData = [...boardData];
+    updatedBoardData.push(column)
+    setBoardData(updatedBoardData)
+  }
+
+  const resetBoard = () => {
+    localStorage.clear()
+    reset()
+  }
   return (
     <div className="Kanban">
       <div className="Kanban__container">
         <div className="Kanban__container__pageNav">
-          <button>Reset Board</button>
+          <button onClick={resetBoard}>Reset Board</button>
         </div>
-
+    
         <div className="Kanban__container__board">
           {
             boardData.map((screen) => {
@@ -18,7 +35,7 @@ const Kanban = () => {
             })
           }
           <div className="Kanban__container__board__addColumn">
-            <button>+</button>
+            <button onClick={addColumn}>+</button>
           </div>
         </div>
       </div>

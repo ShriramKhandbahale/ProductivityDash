@@ -1,13 +1,14 @@
 .DraggableCard {
     background: white;
-    min-height: 5rem;
+    min-height: 4rem;
     width: 31ch;
     display: flex;
     padding-inline: 1rem;
     align-items: center;
     border-radius: 8px;
     margin-block: .5rem;
-    
+    padding-block: .5rem;
+
     &:hover {
         transition: 0.3s ease;
         cursor: grab;
@@ -24,6 +25,20 @@
         &__dragIcon {
             img {
                 opacity: 0.25;
+            }
+        }
+
+        &__cardTitle {
+            cursor: text;
+            text-align: left;
+            display: flex;
+            justify-content: center;
+            
+
+            span {
+                outline: none;
+                // text-align: left;
+                // background: red;
             }
         }
     }

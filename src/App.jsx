@@ -33,11 +33,18 @@ const App = () => {
     }
     // dropped in differend column 
     else {
-      let sourceCards = updatedBoardData.find(item => item.id === source.droppableId)?.cards || [];
-      let destinationCards = updatedBoardData.find(item => item.id === destination.droppableId)?.cards || [];
+      const sourceColumn = updatedBoardData.find(item => item.id === source.droppableId);
+      const destinationColumn = updatedBoardData.find(item => item.id === destination.droppableId);
+
+      const sourceCards = sourceColumn?.cards || [];
+      const destinationCards = destinationColumn?.cards || [];
 
       const [movedCard] = sourceCards.splice(source.index, 1);
+
       destinationCards.splice(destination.index, 0, movedCard);
+
+      sourceColumn.cardsCount = sourceCards.length;
+      destinationColumn.cardsCount = destinationCards.length;
     }
 
     setBoardData(updatedBoardData)

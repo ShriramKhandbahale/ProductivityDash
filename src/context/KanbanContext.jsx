@@ -1,82 +1,53 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react';
 
 const data = [
   {
     title: 'Todo',
     id: crypto.randomUUID(),
-    cardsCount: 2,
-    cards: [
-      {
-        title: 'Task 1',
-        id: crypto.randomUUID(),
-      },
-      {
-        title: 'Task 2',
-        id: crypto.randomUUID()
-      },
-      {
-        title: 'Task 3',
-        id: crypto.randomUUID()
-      },
-    ],
+    cardsCount: 0,
+    cards: []
   },
   {
     title: 'In Progress',
     id: crypto.randomUUID(),
-    cardsCount: 6,
-    cards: [
-      {
-        title: 'Task 4',
-        id: crypto.randomUUID()
-      },
-      {
-        title: 'Task 5',
-        id: crypto.randomUUID()
-      },
-      {
-        title: 'Task 6',
-        id: crypto.randomUUID()
-      }
-    ]
+    cardsCount: 0,
+    cards: []
   },
   {
     title: 'Done',
     id: crypto.randomUUID(),
-    cardsCount: 5,
-    cards: [
-      {
-        title: 'Task 7',
-        id: crypto.randomUUID()
-      },
-      {
-        title: 'Task 8',
-        id: crypto.randomUUID()
-      },
-      {
-        title: 'Task 9',
-        id: crypto.randomUUID()
-      }
-    ]
+    cardsCount: 0,
+    cards: []
   },
-]
+];
 
 export const KanbanContext = createContext();
 
 export const KanbanProvider = ({ children }) => {
-  const [boardData, setBoardData] = useState(data);
+  const [boardData, setBoardData] = useState(() => {
+    const localData = localStorage.getItem('KanbanBoardData');
+    return localData ? JSON.parse(localData) : data;
+  });
 
-  // useEffect(() => {
-  //   localStorage.setItem()
-  // }, [boardData])
+  useEffect(() => {
+    localStorage.setItem('KanbanBoardData', JSON.stringify(boardData));
+  }, [boardData]);
+  
+  const resetBoard = () => {
+    setBoardData(data);
+    localStorage.removeItem('KanbanBoardData');
+  }
+
 
   const forward = {
     boardData,
-    setBoardData
-  }
+    setBoardData,
+    resetBoard
+  };
 
   return (
     <KanbanContext.Provider value={forward}>
       {children}
     </KanbanContext.Provider>
-  )
-}
+  );
+};

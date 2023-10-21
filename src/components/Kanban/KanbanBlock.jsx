@@ -1,9 +1,49 @@
 import DraggableCard from "../DraggableCard";
 import { Droppable } from "react-beautiful-dnd"
+import { KanbanContext } from '../../context';
+import MenuIcon from "../../assets/icons/menu.svg"
+import { useContext, useRef, useEffect, useState } from "react";
 
 const KanbanBlock = (props) => {
+  const { boardData, setBoardData } = useContext(KanbanContext)
+  const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
+  const contentEditableRef = useRef(null);
 
 
+  const addCard = () => {
+    const card = {
+      title: "Title",
+      id: crypto.randomUUID()
+    }
+
+    const updatedBoardData = boardData.map(item => {
+      if (item.id === props.id) {
+        const cards = [...item.cards, card];
+        const cardsCount = cards.length;
+        return { ...item, cards, cardsCount };
+      }
+      return item;
+    });
+    
+    setBoardData(updatedBoardData)
+  }
+
+  const handleTextEdit = (e) => {
+    console.log(contentEditableRef.current.innerText);
+
+    const updatedText = contentEditableRef.current.innerText;
+    const updatedData = boardData.map(column => ({
+      ...column,
+      cards: column.cards.map(card => (card.id === props.id ? { ...card, title: updatedText } : card)),
+    }));
+
+    setUpdatedBoardData(updatedData);
+  };
+
+  const handleSave = () => {
+    contentEditableRef.current.contentEditable = false
+    setBoardData(updatedBoardData);
+  }
   return (
 
     <div className='KanbanBlock'>
@@ -12,14 +52,28 @@ const KanbanBlock = (props) => {
 
           <div className="KanbanBlock__container__header__title">
             <div className="KanbanBlock__container__header__title__wrapper">
-              <span>{props.title}</span>
+              <span
+                ref={contentEditableRef}
+                contentEditable="true"
+                onInput={handleTextEdit}
+                onBlur={handleSave}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSave();
+                  }
+                }}
+                onDoubleClick={() => { contentEditableRef.current.contentEditable = "true" }}
+              >{props.title}</span>
             </div>
             <div className="KanbanBlock__container__header__title__count">
               <span>{props.cardsCount}</span>
             </div>
           </div>
 
-          <div className="KanbanBlock__container__header__controls">...</div>
+          <div className="KanbanBlock__container__header__controls">
+            <img src={MenuIcon} alt="menu" />
+          </div>
 
         </div>
         <Droppable droppableId={props.id} type="group" shouldRespectDroppable={true}>
@@ -41,7 +95,7 @@ const KanbanBlock = (props) => {
 
         <div className="KanbanBlock__container__addNew">
           <div className="KanbanBlock__container__addNew__wrapper">
-            <button>+ Add New</button>
+            <button onClick={addCard}>+ Add New</button>
           </div>
         </div>
       </div>
