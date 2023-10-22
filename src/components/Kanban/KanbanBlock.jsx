@@ -11,6 +11,7 @@ const KanbanBlock = (props) => {
   const { boardData, setBoardData } = useContext(KanbanContext)
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
   const blockTitleRef = useRef(null);
+  // let cardContainerRef = useRef(null);
   const controlMenuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -43,6 +44,8 @@ const KanbanBlock = (props) => {
       return item;
     });
 
+    // cardContainerRef.current.scrollTo(100,100)
+    // console.log(cardContainerRef.current)
     setBoardData(updatedBoardData)
   }
 
