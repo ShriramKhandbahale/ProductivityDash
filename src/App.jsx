@@ -25,13 +25,23 @@ const App = () => {
 
     let updatedBoardData = [...boardData];
 
+    // if deleted 
+    if (destination.droppableId == 'deleteCardBin') {
+      let { cards } = updatedBoardData.find(item => item.id === source.droppableId) || { cards: [] };
+      cards.splice(source.index, 1);
+      setBoardData(updatedBoardData)
+
+      // console.log(movedCard)
+      return
+    }
+
     // dropped in the same column 
     if (source.droppableId === destination.droppableId) {
       let { cards } = updatedBoardData.find(item => item.id === source.droppableId) || { cards: [] };
       const [movedCard] = cards.splice(source.index, 1);
       cards.splice(destination.index, 0, movedCard)
     }
-    // dropped in differend column 
+    // dropped in different column 
     else {
       const sourceColumn = updatedBoardData.find(item => item.id === source.droppableId);
       const destinationColumn = updatedBoardData.find(item => item.id === destination.droppableId);

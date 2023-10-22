@@ -1,6 +1,8 @@
 // packages 
 import { routes } from './routes'
 import { useState } from 'react'
+import { Droppable } from "react-beautiful-dnd"
+
 
 // components 
 import Nav from './Nav'
@@ -28,10 +30,17 @@ const Sidebar = () => {
             })}
           </nav>
         </div>
-
-        <div className="Sidebar__container__bin">
-          <img src={Bin} alt="bin" />
-        </div>
+        <Droppable droppableId="deleteCardBin" type="group" shouldRespectDroppable={true}>
+          {
+            (provided) => (
+              <div className="Sidebar__container__bin"
+                {...provided.droppableProps} ref={provided.innerRef}
+              >
+                <img src={Bin} alt="bin" />
+              </div>
+            )
+          }
+        </Droppable>
       </div>
     </aside>
   )

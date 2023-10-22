@@ -2,13 +2,12 @@ import DraggableCard from "../DraggableCard";
 import { Droppable } from "react-beautiful-dnd"
 import { KanbanContext } from '../../context';
 import MenuIcon from "../../assets/icons/menu.svg"
-import { useContext, useRef, useEffect, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 const KanbanBlock = (props) => {
   const { boardData, setBoardData } = useContext(KanbanContext)
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
   const contentEditableRef = useRef(null);
-
 
   const addCard = () => {
     const card = {
@@ -24,7 +23,7 @@ const KanbanBlock = (props) => {
       }
       return item;
     });
-    
+
     setBoardData(updatedBoardData)
   }
 
@@ -34,7 +33,7 @@ const KanbanBlock = (props) => {
     const updatedText = contentEditableRef.current.innerText;
     const updatedData = boardData.map(column => ({
       ...column,
-      cards: column.cards.map(card => (card.id === props.id ? { ...card, title: updatedText } : card)),
+      title: column.id === props.id ? updatedText : column.title
     }));
 
     setUpdatedBoardData(updatedData);

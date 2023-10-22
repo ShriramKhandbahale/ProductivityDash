@@ -8,10 +8,9 @@ const DraggableCard = (props) => {
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
   const contentEditableRef = useRef(null);
 
-
   useEffect(() => {
-    contentEditableRef.current.contentEditable = "true";
-    contentEditableRef.current.focus();
+      // contentEditableRef.current.contentEditable = "true";
+      // contentEditableRef.current.focus();
   }, []);
 
   const handleTextEdit = (e) => {
@@ -39,6 +38,7 @@ const DraggableCard = (props) => {
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             ref={provided.innerRef}
+            onDoubleClick={() => { contentEditableRef.current.contentEditable = "true" }}
           >
             <div className="DraggableCard__container">
               <div className="DraggableCard__container__dragIcon">
