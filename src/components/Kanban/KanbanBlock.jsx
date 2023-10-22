@@ -2,12 +2,29 @@ import DraggableCard from "../DraggableCard";
 import { Droppable } from "react-beautiful-dnd"
 import { KanbanContext } from '../../context';
 import MenuIcon from "../../assets/icons/menu.svg"
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
+import BlockControlMenu from "./BlockControlMenu";
 
 const KanbanBlock = (props) => {
   const { boardData, setBoardData } = useContext(KanbanContext)
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
   const contentEditableRef = useRef(null);
+  const controlMenuRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (controlMenuRef.current && !controlMenuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const addCard = () => {
     const card = {
@@ -70,8 +87,13 @@ const KanbanBlock = (props) => {
             </div>
           </div>
 
-          <div className="KanbanBlock__container__header__controls">
+          <div className="KanbanBlock__container__header__controls" ref={controlMenuRef} onClick={() => setIsMenuOpen(true)}>
             <img src={MenuIcon} alt="menu" />
+            {isMenuOpen && (
+              <div className="KanbanBlock__container__header__controls__menu">
+                <BlockControlMenu />
+              </div>
+            )}
           </div>
 
         </div>

@@ -54,10 +54,26 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                cursor: pointer;
+                height: 100%;
+                flex-direction: column;
 
                 img {
+                    transition: 0.3s ease;
                     opacity: 0.5;
                 }
+
+                &:hover {
+                    img {
+                        opacity: 0.8;
+                    }
+                }
+
+                &__menu {
+                    position: absolute;
+                    transform: translate(3.5rem, 1rem);
+                }
+
             }
         }
 
