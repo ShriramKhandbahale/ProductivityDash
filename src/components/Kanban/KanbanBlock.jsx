@@ -4,11 +4,13 @@ import { KanbanContext } from '../../context';
 import MenuIcon from "../../assets/icons/menu.svg"
 import { useContext, useRef, useState, useEffect } from "react";
 import BlockControlMenu from "./BlockControlMenu";
+import { motion, AnimatePresence } from "framer-motion";
+import AddIcon from '../../assets/icons/add.svg'
 
 const KanbanBlock = (props) => {
   const { boardData, setBoardData } = useContext(KanbanContext)
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
-  const contentEditableRef = useRef(null);
+  const blockTitleRef = useRef(null);
   const controlMenuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -45,9 +47,7 @@ const KanbanBlock = (props) => {
   }
 
   const handleTextEdit = (e) => {
-    console.log(contentEditableRef.current.innerText);
-
-    const updatedText = contentEditableRef.current.innerText;
+    const updatedText = blockTitleRef.current.innerText;
     const updatedData = boardData.map(column => ({
       ...column,
       title: column.id === props.id ? updatedText : column.title
@@ -57,7 +57,7 @@ const KanbanBlock = (props) => {
   };
 
   const handleSave = () => {
-    contentEditableRef.current.contentEditable = false
+    blockTitleRef.current.contentEditable = false
     setBoardData(updatedBoardData);
   }
   return (
@@ -69,7 +69,7 @@ const KanbanBlock = (props) => {
           <div className="KanbanBlock__container__header__title">
             <div className="KanbanBlock__container__header__title__wrapper">
               <span
-                ref={contentEditableRef}
+                ref={blockTitleRef}
                 contentEditable="true"
                 onInput={handleTextEdit}
                 onBlur={handleSave}
@@ -79,7 +79,7 @@ const KanbanBlock = (props) => {
                     handleSave();
                   }
                 }}
-                onDoubleClick={() => { contentEditableRef.current.contentEditable = "true" }}
+                onDoubleClick={() => { blockTitleRef.current.contentEditable = "true" }}
               >{props.title}</span>
             </div>
             <div className="KanbanBlock__container__header__title__count">
@@ -89,11 +89,18 @@ const KanbanBlock = (props) => {
 
           <div className="KanbanBlock__container__header__controls" ref={controlMenuRef} onClick={() => setIsMenuOpen(true)}>
             <img src={MenuIcon} alt="menu" />
-            {isMenuOpen && (
-              <div className="KanbanBlock__container__header__controls__menu">
-                <BlockControlMenu />
-              </div>
-            )}
+            <AnimatePresence>
+              {isMenuOpen && (
+                <motion.div className="KanbanBlock__container__header__controls__menu"
+                  initial={{ scale: 0.5, translate: '3rem 3rem' }}
+                  animate={{ scale: 1, transformOrigin: 'top left' }}
+                  exit={{ opacity: 0 }}
+                  transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+                >
+                  <BlockControlMenu blockId={props.id} setIsMenuOpen={setIsMenuOpen} blockTitleRef={blockTitleRef} handleTextEdit={handleTextEdit} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
         </div>
@@ -116,7 +123,7 @@ const KanbanBlock = (props) => {
 
         <div className="KanbanBlock__container__addNew">
           <div className="KanbanBlock__container__addNew__wrapper">
-            <button onClick={addCard}>+ Add New</button>
+            <button onClick={addCard}><img src={AddIcon} alt="add" /> Add New</button>
           </div>
         </div>
       </div>
