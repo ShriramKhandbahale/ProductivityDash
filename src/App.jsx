@@ -1,7 +1,7 @@
 // packages
 import { Route, Routes } from 'react-router-dom'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 // components 
 import { Sidebar } from './components';
@@ -12,6 +12,20 @@ import { Home, Kanban, Todo, Pomodoro } from './pages'
 
 const App = () => {
   const { boardData, setBoardData } = useContext(KanbanContext)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleCardDragDrop = (results) => {
     const { source, destination, type } = results;
@@ -66,7 +80,8 @@ const App = () => {
         <div className="App__container">
 
           <div className="App__container__sidebar">
-            <Sidebar />
+
+            {isMobile ? "" : <Sidebar />}            
           </div>
 
           <div className="App__container__app">

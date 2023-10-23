@@ -118,7 +118,7 @@
                     font-size: .9rem;
                     transform: translate(-1.5rem, .5rem);
                     color: #808080;
-                    
+
                     img {
                         transition: 0.3s ease;
                         width: 1.2rem;
@@ -133,5 +133,12 @@
                 }
             }
         }
+    }
+
+    @media screen and (max-width: 500px) {
+        min-width: 100%;
+    }
+
+    @media screen and (max-width: 400px) {
     }
 }

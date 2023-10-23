@@ -10,7 +10,11 @@
             margin-left: 1.5rem;
 
             display: flex;
-            align-items: center;          
+            align-items: center;
+
+            @media screen and (max-width: 500px) {
+                margin-left: 0;
+            }
         }
 
         &__app {
