@@ -1,34 +1,23 @@
 // packages
 import { Route, Routes } from 'react-router-dom'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { useContext, useState, useEffect } from 'react';
+import { useContext} from 'react';
 
 // components 
 import { Sidebar } from './components';
 import { KanbanContext } from './context';
+import { GlobalContext } from './context';
 
 // pages 
 import { Home, Kanban, Todo, Pomodoro } from './pages'
 
 const App = () => {
   const { boardData, setBoardData } = useContext(KanbanContext)
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+  const { isMobile } = useContext(GlobalContext)
 
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 500);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   const handleCardDragDrop = (results) => {
-    const { source, destination, type } = results;
+    const { source, destination } = results;
 
     console.log(results)
 

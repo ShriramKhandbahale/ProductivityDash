@@ -1,6 +1,7 @@
 import DraggableCard from "../DraggableCard";
 import { Droppable } from "react-beautiful-dnd"
 import { KanbanContext } from '../../context';
+import { GlobalContext } from '../../context';
 import MenuIcon from "../../assets/icons/menu.svg"
 import { useContext, useRef, useState, useEffect } from "react";
 import BlockControlMenu from "./BlockControlMenu";
@@ -12,6 +13,7 @@ const KanbanBlock = (props) => {
   const [updatedBoardData, setUpdatedBoardData] = useState(boardData);
   const blockTitleRef = useRef(null);
   // let cardContainerRef = useRef(null);
+  const { isMobile } = useContext(GlobalContext)
   const controlMenuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -95,8 +97,8 @@ const KanbanBlock = (props) => {
             <AnimatePresence>
               {isMenuOpen && (
                 <motion.div className="KanbanBlock__container__header__controls__menu"
-                  initial={{ scale: 0.5, translate: '3rem 3rem' }}
-                  animate={{ scale: 1, transformOrigin: 'top left' }}
+                  initial={{ scale: 0.5, translate: `${isMobile ? '-3rem 4rem' : '3rem 3rem'}` }}
+                  animate={{ scale: 1, transformOrigin: `${isMobile ? 'top right' : 'top left'}` }}
                   exit={{ opacity: 0 }}
                   transition={{ type: 'spring', damping: 20, stiffness: 200 }}
                 >
